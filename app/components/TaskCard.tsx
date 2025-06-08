@@ -5,11 +5,11 @@ export default function TaskCard({ title, description }: { title: string; descri
     const colors = useThemeColors();
 
     return (
-        <View style={[styles.card, { backgroundColor: colors.secondary }]}>
+        <View style={[styles.card, { backgroundColor: colors.grayLight }]}>
             <View style={styles.header}>
-                <Text style={[styles.title, { color: colors.grayWhite }]}>{title}</Text>
+                <Text style={[styles.title, { color: colors.grayDark }]}>{title}</Text>
             </View>
-            <Text style={[styles.description, { color: colors.grayWhite }]}>{description}</Text>
+            <Text style={[styles.description, { color: colors.grayDark }]}>{description}</Text>
         </View>
     );
 }
