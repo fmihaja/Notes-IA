@@ -1,0 +1,20 @@
+export const Colors={
+    light:{
+        primary:"#00561b",
+        secondary:"#38713e",
+        grayDark:"#212121",
+        grayMedium:"#666666",
+        grayLight:"#E0E0E0",
+        grayBackground:"#EFEFEF",
+        grayWhite:"#FFFFFF"
+    },
+    dark:{
+        primary:"#00561b",
+        secondary:"#38713e",
+        grayDark:"#212121",
+        grayMedium:"#666666",
+        grayLight:"#E0E0E0",
+        grayBackground:"#EFEFEF",
+        grayWhite:"#FFFFFF"
+    },
+}
