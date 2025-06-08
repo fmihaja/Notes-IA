@@ -1,4 +1,3 @@
-import { Ionicons } from "@expo/vector-icons";
 import { StyleSheet, Text, View } from "react-native";
 import { useThemeColors } from "../hooks/useThemeColors";
 
@@ -8,7 +7,6 @@ export default function TaskCard({ title, description }: { title: string; descri
     return (
         <View style={[styles.card, { backgroundColor: colors.secondary }]}>
             <View style={styles.header}>
-                <Ionicons name="checkbox-outline" size={24} color={colors.grayWhite} />
                 <Text style={[styles.title, { color: colors.grayWhite }]}>{title}</Text>
             </View>
             <Text style={[styles.description, { color: colors.grayWhite }]}>{description}</Text>

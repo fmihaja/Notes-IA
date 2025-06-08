@@ -4,6 +4,7 @@ import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Button from "../components/Button";
 import Card from "../components/Card";
+import Header from "../components/Header";
 import Input from "../components/Input";
 import ModalView from "../components/ModalView";
 import TaskCard from "../components/TaskCard";
@@ -40,17 +41,7 @@ export default function ToDoList() {
             style={[styles.container, { backgroundColor: colors.primary }]}
         >
             {/* header */}
-            <View style={styles.header}>
-                <Ionicons
-                    name="checkmark-circle-outline"
-                    size={30}
-                    color={colors.grayWhite}
-                />
-                <ThemedText variant="headLine" color="grayWhite">
-                    Liste des tâches
-                </ThemedText>
-            </View>
-
+            <Header title="Notes" icon="create-outline" />
             {/* body */}
             <View style={[styles.body, { backgroundColor: colors.grayWhite }]}>
                 <FlatList
@@ -91,7 +82,7 @@ export default function ToDoList() {
                 setModalState={setModalVisible}
             >
                 <Card
-                    title="Nouvelle Tache"
+                    title="Nouvelle Note"
                     footer={
                         <>
                             <Button
@@ -108,8 +99,6 @@ export default function ToDoList() {
                                     Ajouter
                                 </ThemedText>
                             </Button>
-                            {/* Bouton pour fermer la modal */}
-
                             <Button
                                 onPress={() => {
                                     setModalVisible(false);
@@ -192,12 +181,7 @@ const styles = StyleSheet.create({
         // 👇 Ombre pour Android
         elevation: 10,
     },
-    header: {
-        padding: 10,
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 5,
-    },
+
     openButton: {
         backgroundColor: "#38713e",
         padding: 12,
