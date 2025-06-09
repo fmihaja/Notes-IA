@@ -1,25 +1,46 @@
-import dayjs from 'dayjs';
-import { StyleSheet, View } from "react-native";
+import dayjs from "dayjs";
+import {
+    StyleSheet,
+    TouchableOpacity,
+    TouchableOpacityProps,
+    View,
+} from "react-native";
 import { useThemeColors } from "../hooks/useThemeColors";
 import ThemedText from "./ThemedText";
 
-type Props={ 
-    title: string; 
-    description: string,
-    date: number 
-}
-
-export default function TaskCard({ title, description, date }: Props ) {
+type Props = TouchableOpacityProps & {
+    title: string;
+    description: string;
+    date: number;
+};
+// dayjs(date).format("DD/MM/YYYY")
+export default function TaskCard({ title, description, date, ...rest }: Props) {
     const colors = useThemeColors();
-
+    const now=dayjs(Date.now());
+    const createdAt=(): string=>{
+        const desc="Il y a ";
+        if (dayjs(date).diff(now, 'second')<0 && Math.abs(dayjs(date).diff(now, 'second'))<60){
+            return desc+Math.abs(dayjs(date).diff(now, "second"))+ " sec";
+        }
+        else if (dayjs(date).diff(now, 'minute')<0 && Math.abs(dayjs(date).diff(now, 'minute'))<60){
+            return desc+Math.abs(dayjs(date).diff(now, "minute"))+ " min";
+        }
+        else if (dayjs(now).isSame(dayjs(date))){
+            return dayjs(date).format("DD/MM/YYYY");
+        }
+        return "Maintenant";
+    }
     return (
-        <View style={[styles.card, { backgroundColor: colors.grayLight }]}>
+        <TouchableOpacity
+            style={[styles.card, { backgroundColor: colors.grayLight }]}
+            {...rest}
+        >
             <View style={styles.header}>
                 <ThemedText variant="title">{title}</ThemedText>
-                <ThemedText>{dayjs(date).format("DD/MM/YYYY")}</ThemedText>
+                <ThemedText>{createdAt()}</ThemedText>
             </View>
             <ThemedText style={styles.description}>{description}</ThemedText>
-        </View>
+        </TouchableOpacity>
     );
 }
 
@@ -38,7 +59,7 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
         alignItems: "center",
-        justifyContent:"space-between",
+        justifyContent: "space-between",
         marginBottom: 5,
     },
     description: {

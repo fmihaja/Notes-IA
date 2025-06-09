@@ -28,12 +28,17 @@ export default function ToDoList() {
     const [modalVisible, setModalVisible] = useState(false);
     const addTask = () => {
         setTasks((prev) => [{ ...task, id: Date.now().toString() }, ...prev]);
-        setTask({
-            id: "",
-            title: "",
-            description: "",
-        });
         setModalVisible(false);
+    };
+    const checkNote = (id: number) => {
+        const taskSelected = tasks.find((item) => +item.id == id)!;
+        setModalVisible(true);
+        setTask({
+            id: taskSelected.id,
+            title: taskSelected.title,
+            description: taskSelected.description,
+        });
+        setModalVisible(true);
     };
 
     return (
@@ -46,7 +51,7 @@ export default function ToDoList() {
             <View style={[styles.body, { backgroundColor: colors.grayWhite }]}>
                 <FlatList
                     data={tasks}
-                    keyExtractor={(item) => item.id.toString()}
+                    keyExtractor={(item) => item.id}
                     style={{ flex: 1 }}
                     contentContainerStyle={
                         tasks.length === 0 ? styles.emptyContainer : undefined
@@ -56,6 +61,7 @@ export default function ToDoList() {
                             title={item.title}
                             description={item.description}
                             date={+item.id}
+                            onPress={() => checkNote(+item.id)}
                         />
                     )}
                     ListEmptyComponent={
@@ -68,6 +74,11 @@ export default function ToDoList() {
                     style={[styles.addButton]}
                     onPress={() => {
                         setModalVisible(true);
+                        setTask({
+                            id: "",
+                            title: "",
+                            description: "",
+                        });
                     }}
                 >
                     <Ionicons
@@ -103,11 +114,6 @@ export default function ToDoList() {
                             <Button
                                 onPress={() => {
                                     setModalVisible(false);
-                                    setTask({
-                                        id: "",
-                                        title: "",
-                                        description: "",
-                                    });
                                 }}
                                 backgroundColor="secondary"
                             >
@@ -178,7 +184,6 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 4.65,
-
         // 👇 Ombre pour Android
         elevation: 10,
     },
