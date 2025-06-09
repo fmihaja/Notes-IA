@@ -27,7 +27,7 @@ export default function ToDoList() {
     >([]);
     const [modalVisible, setModalVisible] = useState(false);
     const addTask = () => {
-        setTasks((prev) => [...prev, { ...task, id: Date.now().toString() }]);
+        setTasks((prev) => [{ ...task, id: Date.now().toString() }, ...prev]);
         setTask({
             id: "",
             title: "",
@@ -55,6 +55,7 @@ export default function ToDoList() {
                         <TaskCard
                             title={item.title}
                             description={item.description}
+                            date={+item.id}
                         />
                     )}
                     ListEmptyComponent={

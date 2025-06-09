@@ -1,15 +1,24 @@
-import { StyleSheet, Text, View } from "react-native";
+import dayjs from 'dayjs';
+import { StyleSheet, View } from "react-native";
 import { useThemeColors } from "../hooks/useThemeColors";
+import ThemedText from "./ThemedText";
 
-export default function TaskCard({ title, description }: { title: string; description: string }) {
+type Props={ 
+    title: string; 
+    description: string,
+    date: number 
+}
+
+export default function TaskCard({ title, description, date }: Props ) {
     const colors = useThemeColors();
 
     return (
         <View style={[styles.card, { backgroundColor: colors.grayLight }]}>
             <View style={styles.header}>
-                <Text style={[styles.title, { color: colors.grayDark }]}>{title}</Text>
+                <ThemedText variant="title">{title}</ThemedText>
+                <ThemedText>{dayjs(date).format("DD/MM/YYYY")}</ThemedText>
             </View>
-            <Text style={[styles.description, { color: colors.grayDark }]}>{description}</Text>
+            <ThemedText style={styles.description}>{description}</ThemedText>
         </View>
     );
 }
@@ -29,13 +38,8 @@ const styles = StyleSheet.create({
     header: {
         flexDirection: "row",
         alignItems: "center",
-        marginBottom: 8,
-        gap: 8,
-    },
-    title: {
-        fontSize: 16,
-        fontWeight: "bold",
-        textTransform: "capitalize"
+        justifyContent:"space-between",
+        marginBottom: 5,
     },
     description: {
         fontSize: 14,
