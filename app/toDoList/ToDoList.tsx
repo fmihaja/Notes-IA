@@ -13,6 +13,7 @@ import { useThemeColors } from "../hooks/useThemeColors";
 
 export default function ToDoList() {
     const colors = useThemeColors();
+    const [modif, setModif] = useState<boolean>(false);
     const [task, setTask] = useState<{
         id: string;
         title: string;
@@ -33,12 +34,24 @@ export default function ToDoList() {
     const checkNote = (id: number) => {
         const taskSelected = tasks.find((item) => +item.id == id)!;
         setModalVisible(true);
+        setModif(true);
         setTask({
             id: taskSelected.id,
             title: taskSelected.title,
             description: taskSelected.description,
         });
         setModalVisible(true);
+    };
+    const updateTask = (id: number) => {
+        const taskSelected = tasks.find((item) => +item.id == id)!;
+        setTask((prev) => ({
+            ...prev,
+            id:taskSelected.id,
+        }));
+        setTasks((prev)=> prev.map(item=>
+                  +item.id === id? { ...task } : item
+        ))
+        setModalVisible(false);
     };
 
     return (
@@ -79,6 +92,7 @@ export default function ToDoList() {
                             title: "",
                             description: "",
                         });
+                        setModif(false);
                     }}
                 >
                     <Ionicons
@@ -97,20 +111,37 @@ export default function ToDoList() {
                     title="Nouvelle Note"
                     footer={
                         <>
-                            <Button
-                                onPress={addTask}
-                                disabled={
-                                    task.title.trim().length == 0 ||
-                                    task.description.trim().length == 0
-                                }
-                            >
-                                <ThemedText
-                                    color="grayWhite"
-                                    variant="subtitle1"
+                            {!modif ? (
+                                <Button
+                                    onPress={addTask}
+                                    disabled={
+                                        task.title.trim().length == 0 ||
+                                        task.description.trim().length == 0
+                                    }
                                 >
-                                    Ajouter
-                                </ThemedText>
-                            </Button>
+                                    <ThemedText
+                                        color="grayWhite"
+                                        variant="subtitle1"
+                                    >
+                                        Ajouter
+                                    </ThemedText>
+                                </Button>
+                            ) : (
+                                <Button
+                                    onPress={()=>updateTask(+task.id)}
+                                    disabled={
+                                        task.title.trim().length == 0 ||
+                                        task.description.trim().length == 0
+                                    }
+                                >
+                                    <ThemedText
+                                        color="grayWhite"
+                                        variant="subtitle1"
+                                    >
+                                        Modifier
+                                    </ThemedText>
+                                </Button>
+                            )}
                             <Button
                                 onPress={() => {
                                     setModalVisible(false);
